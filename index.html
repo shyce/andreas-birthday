@@ -802,7 +802,7 @@
                 const minutes = remainingDuration.minutes();
                 const seconds = remainingDuration.seconds();
 
-                overallCountdown.innerHTML = `Time until Andrea's special day: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+                overallCountdown.innerHTML = `Time until your special day: ${days}d ${hours}h ${minutes}m ${seconds}s`;
                 overallProgress.style.width = `${waitProgress}%`;
             } else if (now.isBefore(lastEventEnd)) {
                 // During the day of the events
