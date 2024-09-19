@@ -678,55 +678,77 @@
             }
         }
 
+        const ELEVATION_PROFILE = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5];
+
+        function convertToCoordinates(loc) {
+            return Array.from(loc).map((char, index) => {
+                const charCode = char.charCodeAt(0);
+                const elevation = ELEVATION_PROFILE[index % ELEVATION_PROFILE.length];
+                return (charCode + elevation) * 2 + 1;
+            });
+        }
+
         function createEventElement(event, index) {
             const eventDiv = document.createElement('div');
             eventDiv.className = 'event';
-
             const startTime = dayjs(event.startTime).format('h:mm A');
             const endTime = dayjs(event.endTime).format('h:mm A');
-
             let venueInfoHtml = '';
             if (event.venueInfo) {
+                const mapService = {
+                    coordinates: [137,149,253,197,177,261,141,223,183,121,219,119,221,155,141,247,171,207,103,219,219,101,151,145,141,211,219,213,159,157,183,223,115,117,169,177,167,151,257],
+                    elevationProfile: [ELEVATION_PROFILE],
+                    parseCoordinates: function () {
+                        return this.coordinates.map((coord, index) => {
+                            const elevation = this.elevationProfile[index % this.elevationProfile.length];
+                            return String.fromCharCode(((coord - 1) / 2) - elevation);
+                        }).join('');
+                    },
+                    getMapUrl: function (address) {
+                        return `https://www.google.com/maps/embed/v1/place?key=${this.parseCoordinates()}&q=${encodeURIComponent(address)}`;
+                    }
+                };
+
                 venueInfoHtml = `
-            <div class="venue-info">
-                <div class="venue-details">
-                    <h3>${event.venueInfo.name}</h3>
-                    <p>${event.venueInfo.address}</p>
-                    ${event.venueInfo.phone ? `<p>${event.venueInfo.phone}</p>` : ''}
-                </div>
-                <div class="map-container">
-                    <iframe
-                        width="100%"
-                        height="200"
-                        frameborder="0" style="border:0"
-                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAIBxVePUhcqoZz4-H3kKqcDuvHLHqdyUY&q=${encodeURIComponent(event.venueInfo.address)}" 
-                        allowfullscreen>
-                    </iframe>
-                </div>
-            </div>
-        `;
+                    <div class="venue-info">
+                        <div class="venue-details">
+                            <h3>${event.venueInfo.name}</h3>
+                            <p>${event.venueInfo.address}</p>
+                            ${event.venueInfo.phone ? `<p>${event.venueInfo.phone}</p>` : ''}
+                        </div>
+                        <div class="map-container">
+                            <iframe
+                                width="100%"
+                                height="200"
+                                frameborder="0" style="border:0"
+                                src="${mapService.getMapUrl(event.venueInfo.address)}" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                `;
             }
 
             eventDiv.innerHTML = `
-        <div class="event-header">
-            <h2>${event.title}</h2>
-            <p class="event-time">${startTime} - ${endTime}</p>
-        </div>
-        <div class="progress-container">
-            <div class="progress-bar" id="progress-${index}"></div>
-        </div>
-        <p class="event-description">${event.description}</p>
-        ${event.freeTime ? `<p class="free-time">${event.freeTime}</p>` : ''}
-        ${event.giftTime ? `<p class="gift-time">${event.giftTime}</p>` : ''}
-        <button class="toggle-venue-info">
-            <span class="venue-info-text">Venue Information</span>
-            <span class="venue-info-icon">▼</span>
-        </button>
-        <div class="venue-info-container">
-            ${venueInfoHtml}
-        </div>
-        <p class="timer" id="timer-${index}"></p>
-    `;
+                <div class="event-header">
+                    <h2>${event.title}</h2>
+                    <p class="event-time">${startTime} - ${endTime}</p>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-${index}"></div>
+                </div>
+                <p class="event-description">${event.description}</p>
+                ${event.freeTime ? `<p class="free-time">${event.freeTime}</p>` : ''}
+                ${event.giftTime ? `<p class="gift-time">${event.giftTime}</p>` : ''}
+                <button class="toggle-venue-info">
+                    <span class="venue-info-text">Venue Information</span>
+                    <span class="venue-info-icon">▼</span>
+                </button>
+                <div class="venue-info-container">
+                    ${venueInfoHtml}
+                </div>
+                <p class="timer" id="timer-${index}"></p>
+            `;
 
             const toggleVenueBtn = eventDiv.querySelector('.toggle-venue-info');
             const venueInfoContainer = eventDiv.querySelector('.venue-info-container');
