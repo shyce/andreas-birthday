@@ -630,8 +630,7 @@
                 <div class="venue-details">
                     <h3>${event.venueInfo.name}</h3>
                     <p>${event.venueInfo.address}</p>
-                    ${event.venueInfo.phone ? `<p>📞 ${event.venueInfo.phone}</p>` : ''}
-                    <a href="${event.venueInfo.mapsLink}" target="_blank" rel="noopener noreferrer" class="maps-link">Open in Google Maps</a>
+                    ${event.venueInfo.phone ? `<p>${event.venueInfo.phone}</p>` : ''}
                 </div>
                 <div class="map-container">
                     <iframe
