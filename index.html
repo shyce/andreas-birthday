@@ -4,24 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Andrea's Enchanting 39th Birthday</title>
+    <title>Andrea's Enchanted 39th Birthday</title>
     <link
-        href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;700&display=swap"
         rel="stylesheet">
     <style>
         :root {
-            --bg-gradient: radial-gradient(circle, #1a0933, #3c096c);
+            --bg-gradient: radial-gradient(circle at center, #1a0933, #3c096c);
             --text-primary: #f8e3ff;
             --text-secondary: #d8b4e2;
-            --accent-color: #ff9e6d;
+            --accent-color: #ffd700;
             --accent-color-2: #4ecdc4;
-            --event-bg: rgba(255, 255, 255, 0.1);
-            --event-border: rgba(255, 255, 255, 0.2);
-            --completed-opacity: 0.5;
+            --event-bg: rgba(255, 255, 255, 0.05);
+            --event-border: rgba(255, 255, 255, 0.1);
+            --completed-opacity: 0.6;
         }
 
         body {
-            font-family: 'Open Sans', sans-serif;
+            font-family: 'Lora', serif;
             line-height: 1.6;
             color: var(--text-primary);
             margin: 0;
@@ -46,53 +46,57 @@
             font-size: 3.5em;
             margin-bottom: 30px;
             letter-spacing: 1px;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
 
-        #overall-countdown {
-            text-align: center;
-            font-size: 2em;
-            margin-bottom: 40px;
-            color: var(--text-secondary);
-            background-color: rgba(255, 255, 255, 0.2);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(8px);
-            transition: opacity 0.5s ease;
-        }
 
         .event {
             background-color: var(--event-bg);
             border-radius: 15px;
             padding: 25px;
             margin-bottom: 30px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2), 0 0 15px rgba(78, 205, 196, 0.1);
             transition: all 0.3s ease;
             border: 1px solid var(--event-border);
             backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, rgba(78, 205, 196, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
         }
 
         .event:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-            border-color: var(--accent-color);
-            filter: brightness(1.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 20px rgba(78, 205, 196, 0.2);
+        }
+
+        .event:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 20px rgba(78, 205, 196, 0.2);
         }
 
         .event h2 {
-            color: var(--accent-color-2);
-            margin-top: 0;
+            color: var(--accent-color);
+            margin: 0;
             font-size: 1.8em;
-            font-family: 'Merriweather', serif;
-            display: flex;
-            align-items: center;
+            font-family: 'Playfair Display', serif;
         }
 
         .event p {
             margin: 10px 0;
             color: var(--text-secondary);
-            font-size: 1.1em;
+            font-size: 1em;
             line-height: 1.6;
         }
 
@@ -110,11 +114,94 @@
             text-decoration: none;
         }
 
-        .timer {
-            font-weight: 600;
-            color: var(--accent-color);
+        .venue-info-icon {
             font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .venue-info-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .venue-info-container.show {
+            max-height: 1000px;
+        }
+
+        .venue-info {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
             margin-top: 15px;
+        }
+
+        .venue-info h3 {
+            color: var(--accent-color);
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .venue-info p {
+            margin: 5px 0;
+        }
+
+        .venue-info a {
+            color: var(--accent-color-2);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .venue-info a:hover {
+            color: var(--accent-color);
+        }
+
+        .venue-details h3 {
+            color: var(--accent-color);
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .venue-details p {
+            margin: 5px 0;
+            color: var(--text-secondary);
+        }
+
+        .timer {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            margin-top: 15px;
+        }
+
+        .event-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .event-time {
+            font-size: 1.1em;
+            color: var(--accent-color-2);
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .event-description {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .free-time,
+        .gift-time {
+            background-color: rgba(255, 215, 0, 0.1);
+            border-left: 3px solid var(--accent-color);
+            padding: 10px;
+            margin-top: 10px;
+            font-style: italic;
         }
 
         input[type="checkbox"] {
@@ -146,6 +233,7 @@
             height: 20px;
             opacity: 0.7;
             transition: opacity 0.5s ease;
+            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.3));
         }
 
         footer {
@@ -159,6 +247,121 @@
             z-index: 1;
         }
 
+        .progress-container {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: var(--accent-color);
+            width: 0;
+            transition: width 0.5s ease-in-out;
+        }
+
+
+        .overall-time {
+            text-align: center;
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        .overall-progress-container {
+            margin-bottom: 30px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #overall-countdown {
+            text-align: center;
+            font-size: 1.2em;
+            color: var(--text-primary);
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .overall-progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #overall-progress {
+            height: 100%;
+            background-color: var(--accent-color);
+            width: 0;
+            transition: width 0.5s ease-in-out;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-image: linear-gradient(45deg,
+                    rgba(255, 255, 255, 0.2) 25%,
+                    transparent 25%,
+                    transparent 50%,
+                    rgba(255, 255, 255, 0.2) 50%,
+                    rgba(255, 255, 255, 0.2) 75%,
+                    transparent 75%,
+                    transparent);
+            background-size: 50px 50px;
+            animation: move 2s linear infinite;
+        }
+
+        @keyframes move {
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                background-position: 50px 50px;
+            }
+        }
+
+        .toggle-venue-info {
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+            padding: 10px 15px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .toggle-venue-info:hover {
+            background-color: rgba(255, 215, 0, 0.1);
+        }
+
+        .map-container {
+            margin-top: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .maps-link {
+            color: var(--accent-color-2);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .maps-link:hover {
+            color: var(--accent-color);
+        }
+
         @media (max-width: 600px) {
             h1 {
                 font-size: 2.5em;
@@ -167,6 +370,30 @@
             .event {
                 padding: 20px;
             }
+
+            .toggle-venue-info,
+            .toggle-map {
+                display: block;
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            .event-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .event-time {
+                margin-top: 5px;
+            }
+
+            .overall-progress-container {
+                padding: 15px;
+            }
+
+            #overall-countdown {
+                font-size: 1em;
+            }
         }
     </style>
 </head>
@@ -174,7 +401,7 @@
 <body>
     <div id="leaves"></div>
     <div class="container">
-        <h1>Andrea's Enchanting 39th Birthday</h1>
+        <h1>Andrea's Enchanted 39th Birthday</h1>
         <div id="overall-countdown"><span id="main-timer"></span></div>
         <div id="events-container">
             <!-- Events will be dynamically added here -->
@@ -182,8 +409,8 @@
     </div>
     <footer>
         <p>Andrea, as we celebrate another year together, I can't help but reflect on our amazing journey since that
-            night at Wild Bull. From our early adventures to raising our incredible son Gabriel, you’ve been the light
-            of my life. Our love continues to grow stronger, filling our days with laughter and joy. Here’s to you, the
+            night at Wild Bull. From our early adventures to raising our incredible son Gabriel, you've been the light
+            of my life. Our love continues to grow stronger, filling our days with laughter and joy. Here's to you, the
             heart of our family, and all the beautiful moments still ahead.</p>
     </footer>
     <script src="https://unpkg.com/dayjs@1.11.10/dayjs.min.js"></script>
@@ -192,37 +419,83 @@
     <script>
         const events = [
             {
-                time: '2024-09-21T09:00:00',
-                title: 'Autumn Sunrise Breakfast at Café Casa',
-                description: 'We’ll kick off your special day with a warm and cozy breakfast at Café Casa, a lovely spot that feels like a home away from home. Picture us nestled in a corner, enjoying the smell of freshly brewed coffee and your favorite pastries while the autumn sun starts to peek through the leaves outside. It’ll be the perfect way to savor the morning and set the tone for the day ahead.'
+                startTime: '2024-09-21T09:00:00',
+                endTime: '2024-09-21T10:30:00',
+                title: `Autumn Sunrise Breakfast at Caffè Casa`,
+                description: `We'll kick off your special day with a warm and cozy breakfast at Caffè Casa, a charming spot in Kalamazoo Mall. Picture us nestled in a corner, enjoying the aroma of freshly brewed coffee and your favorite pastries as the autumn sun begins to illuminate the city.`,
+                freeTime: `After breakfast, we'll take a leisurely 12-minute stroll (0.6 mile) to our next destination. We'll walk via E Michigan Ave, giving us a chance to admire the early morning ambiance of downtown Kalamazoo.`,
+                venueInfo: {
+                    name: `Caffè Casa`,
+                    address: `128 S Kalamazoo Mall, Kalamazoo, MI 49007`,
+                    phone: `(269) 385-1026`,
+                    mapsLink: `https://goo.gl/maps/X5XZQ9Z9Z9Z9Z9Z9A`
+                }
             },
             {
-                time: '2024-09-21T11:00:00',
-                title: 'Fall Fashion Exploration in Downtown Kalamazoo',
-                description: 'After breakfast, we’ll stroll through the charming boutiques in downtown Kalamazoo. As we wander hand in hand, we’ll take our time trying on cozy sweaters and browsing for that perfect scarf to complement the fall colors. It’ll be a delightful way to enjoy the crisp air and capture the essence of the season together, all while sharing laughter and inspiration.'
+                startTime: '2024-09-21T11:00:00',
+                endTime: '2024-09-21T13:00:00',
+                title: `Fall Fashion Exploration in Downtown Kalamazoo`,
+                description: `We'll stroll through the charming boutiques in downtown Kalamazoo. As we wander hand in hand, we'll take our time trying on cozy sweaters and browsing for that perfect scarf to complement the fall colors.`,
+                giftTime: `I've set aside a special budget for you to choose a new fall outfit as a birthday treat!`,
+                venueInfo: {
+                    name: `Kalamazoo Mall`,
+                    address: `South Kalamazoo Mall, Kalamazoo, MI 49007`,
+                    mapsLink: `https://goo.gl/maps/Y6Y6Q9Z9Z9Z9Z9Z9B`
+                }
             },
             {
-                time: '2024-09-21T13:30:00',
-                title: 'Lunch at 600 Kitchen & Bar',
-                description: 'Next, we’ll settle in for a romantic lunch at 600 Kitchen & Bar, a place known for its creative seasonal menu and inviting atmosphere. We can reminisce about our journey together over delicious dishes and toast to the moments that brought us here. I want to create a space where we can connect and share stories, savoring each bite just as much as we savor each other’s company.'
+                startTime: '2024-09-21T13:30:00',
+                endTime: '2024-09-21T15:00:00',
+                title: `Lunch at 600 Kitchen & Bar`,
+                description: `We'll settle in for a romantic lunch at 600 Kitchen & Bar, known for its creative seasonal menu and inviting atmosphere. We can reminisce about our journey together over delicious dishes and toast to the moments that brought us here.`,
+                giftTime: `I've arranged for a special birthday dessert to be served at the end of our meal.`,
+                venueInfo: {
+                    name: `600 Kitchen & Bar`,
+                    address: `600 E Michigan Ave, Kalamazoo, MI 49007`,
+                    phone: `(269) 443-2401`,
+                    mapsLink: `https://goo.gl/maps/Z7Z7Q9Z9Z9Z9Z9Z9C`
+                }
             },
             {
-                time: '2024-09-21T15:30:00',
-                title: 'Relaxing Spa Retreat at Centre Spa',
-                description: 'You deserve a little pampering, so we’ll head to Centre Spa for a well-deserved retreat. I’ve arranged for a soothing deep tissue massage, allowing you to unwind and let go of any stress. It’ll be a peaceful escape where you can relax and recharge, and I can’t wait to see you blissfully rejuvenated afterward, ready to enjoy the rest of our day.'
+                startTime: '2024-09-21T15:30:00',
+                endTime: '2024-09-21T17:30:00',
+                title: `Relaxing Spa Retreat at Centre Spa`,
+                description: `You deserve some pampering, so we'll head to Centre Spa for a well-deserved retreat. I've arranged for a soothing deep tissue massage, allowing you to unwind and let go of any stress.`,
+                giftTime: `In addition to the massage, I've booked a surprise spa treatment for you to enjoy.`,
+                venueInfo: {
+                    name: `Centre Spa`,
+                    address: `1429 W Main St, Kalamazoo, MI 49006`,
+                    phone: `(269) 342-4441`,
+                    mapsLink: `https://goo.gl/maps/A8A8Q9Z9Z9Z9Z9Z9D`
+                }
             },
             {
-                time: '2024-09-21T18:00:00',
-                title: 'Candlelit Dinner at Rustica',
-                description: 'As the sun begins to set, we’ll head to Rustica for an intimate dinner by candlelight. This cozy restaurant is perfect for us to share a meal filled with rich flavors and heartwarming conversation. I’ll have a special dessert planned to surprise you, making this moment even sweeter. It’s a chance for us to reflect on our years together while looking forward to all that’s yet to come.'
+                startTime: '2024-09-21T18:00:00',
+                endTime: '2024-09-21T20:00:00',
+                title: `Candlelit Dinner at Rustica`,
+                description: `As the sun begins to set, we'll head to Rustica for an intimate dinner by candlelight. This cozy restaurant is perfect for us to share a meal filled with rich flavors and heartwarming conversation. I'll have a special dessert planned to surprise you, making this moment even sweeter.`,
+                giftTime: `I have a special gift to present to you during our dinner.`,
+                venueInfo: {
+                    name: `Rustica`,
+                    address: `236 S Kalamazoo Mall, Kalamazoo, MI 49007`,
+                    phone: `(269) 492-0247`,
+                    mapsLink: `https://goo.gl/maps/B9B9Q9Z9Z9Z9Z9Z9E`
+                }
             },
             {
-                time: '2024-09-21T20:30:00',
-                title: 'Harvest Moon Dance at Wild Bull',
-                description: 'Finally, we’ll dance the night away at Wild Bull, where our story began. The energy will be electric as we celebrate at the Harvest Moon Party, and just when we think the night can’t get any better, we’ll enjoy the late-night pizza buffet—no waiting in line! It’ll be a perfect way to reminisce about our first moments while making new memories together under the autumn stars.'
+                startTime: '2024-09-21T20:30:00',
+                endTime: '2024-09-21T23:59:59',
+                title: `Harvest Moon Dance at Wild Bull`,
+                description: `Finally, we'll dance the night away at Wild Bull, where our story began. The energy will be electric as we celebrate at the Harvest Moon Party, and just when we think the night can't get any better, we'll enjoy the late-night pizza buffet—no waiting in line!`,
+                freeTime: `Take breaks between dances to enjoy the outdoor patio and gaze at the harvest moon.`,
+                venueInfo: {
+                    name: `Wild Bull Saloon & Steakpit`,
+                    address: `139 S Edwards St, Kalamazoo, MI 49007`,
+                    phone: `(269) 978-8451`,
+                    mapsLink: `https://goo.gl/maps/C0C0Q9Z9Z9Z9Z9Z9F`
+                }
             }
         ];
-
 
         const LEAF_COUNT = 75;
         const leafPool = [];
@@ -346,15 +619,152 @@
         function createEventElement(event, index) {
             const eventDiv = document.createElement('div');
             eventDiv.className = 'event';
-            eventDiv.innerHTML = `
-            <h2>
-                <input type="checkbox" id="event-${index}" onchange="toggleComplete(${index})">
-                <label for="event-${index}">${event.title}</label>
-            </h2>
-            <p>${event.description}</p>
-            <p class="timer" id="timer-${index}"></p>
+
+            const startTime = dayjs(event.startTime).format('h:mm A');
+            const endTime = dayjs(event.endTime).format('h:mm A');
+
+            let venueInfoHtml = '';
+            if (event.venueInfo) {
+                venueInfoHtml = `
+            <div class="venue-info">
+                <div class="venue-details">
+                    <h3>${event.venueInfo.name}</h3>
+                    <p>${event.venueInfo.address}</p>
+                    ${event.venueInfo.phone ? `<p>📞 ${event.venueInfo.phone}</p>` : ''}
+                    <a href="${event.venueInfo.mapsLink}" target="_blank" rel="noopener noreferrer" class="maps-link">Open in Google Maps</a>
+                </div>
+                <div class="map-container">
+                    <iframe
+                        width="100%"
+                        height="200"
+                        frameborder="0" style="border:0"
+                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAIBxVePUhcqoZz4-H3kKqcDuvHLHqdyUY&q=${encodeURIComponent(event.venueInfo.address)}" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
         `;
+            }
+
+            eventDiv.innerHTML = `
+        <div class="event-header">
+            <h2>${event.title}</h2>
+            <p class="event-time">${startTime} - ${endTime}</p>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-${index}"></div>
+        </div>
+        <p class="event-description">${event.description}</p>
+        ${event.freeTime ? `<p class="free-time">${event.freeTime}</p>` : ''}
+        ${event.giftTime ? `<p class="gift-time">${event.giftTime}</p>` : ''}
+        <button class="toggle-venue-info">
+            <span class="venue-info-text">Venue Information</span>
+            <span class="venue-info-icon">▼</span>
+        </button>
+        <div class="venue-info-container">
+            ${venueInfoHtml}
+        </div>
+        <p class="timer" id="timer-${index}"></p>
+    `;
+
+            const toggleVenueBtn = eventDiv.querySelector('.toggle-venue-info');
+            const venueInfoContainer = eventDiv.querySelector('.venue-info-container');
+            const venueInfoIcon = eventDiv.querySelector('.venue-info-icon');
+
+            toggleVenueBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                venueInfoContainer.classList.toggle('show');
+                venueInfoIcon.textContent = venueInfoContainer.classList.contains('show') ? '▲' : '▼';
+            });
+
             return eventDiv;
+        }
+
+        function updateProgressBars() {
+            const now = dayjs();
+            events.forEach((event, index) => {
+                const startTime = dayjs(event.startTime);
+                const endTime = dayjs(event.endTime);
+                const progressBar = document.getElementById(`progress-${index}`);
+
+                if (now.isBefore(startTime)) {
+                    progressBar.style.width = '0%';
+                } else if (now.isAfter(endTime)) {
+                    progressBar.style.width = '100%';
+                } else {
+                    const totalDuration = endTime.diff(startTime);
+                    const elapsed = now.diff(startTime);
+                    const percentage = (elapsed / totalDuration) * 100;
+                    progressBar.style.width = `${percentage}%`;
+                }
+            });
+
+            // Update overall progress bar
+            const overallProgress = document.getElementById('overall-progress');
+            const firstEventStart = dayjs(events[0].startTime);
+            const lastEventEnd = dayjs(events[events.length - 1].endTime);
+            const totalDuration = lastEventEnd.diff(firstEventStart);
+            const elapsed = now.diff(firstEventStart);
+            const overallPercentage = Math.max(0, Math.min(100, (elapsed / totalDuration) * 100));
+            overallProgress.style.width = `${overallPercentage}%`;
+        }
+
+        // Add this function to calculate the overall progress
+        function calculateOverallProgress() {
+            const now = dayjs();
+            const firstEventStart = dayjs(events[0].startTime);
+            const lastEventEnd = dayjs(events[events.length - 1].endTime);
+
+            if (now.isBefore(firstEventStart)) {
+                // Before the day begins, progress should be 0%
+                return 0;
+            } else if (now.isAfter(lastEventEnd)) {
+                // After the day is over, progress should be 100%
+                return 100;
+            } else {
+                // During the day, calculate actual progress
+                const totalDuration = lastEventEnd.diff(firstEventStart);
+                const elapsed = now.diff(firstEventStart);
+                return Math.max(0, Math.min(100, (elapsed / totalDuration) * 100));
+            }
+        }
+
+        function updateOverallCountdown() {
+            const now = dayjs();
+            const surpriseAnnouncement = dayjs('2024-09-19T04:20:00'); // Replace with the actual date you told her
+            const eventDay = dayjs(events[0].startTime).startOf('day');
+            const firstEventStart = dayjs(events[0].startTime);
+            const lastEventEnd = dayjs(events[events.length - 1].endTime);
+            const overallCountdown = document.getElementById('overall-countdown');
+            const overallProgress = document.getElementById('overall-progress');
+
+            if (now.isBefore(eventDay)) {
+                // Progress from surprise announcement to event day
+                const totalWaitDuration = eventDay.diff(surpriseAnnouncement);
+                const elapsedWait = now.diff(surpriseAnnouncement);
+                const waitProgress = Math.min(100, (elapsedWait / totalWaitDuration) * 100);
+
+                const remainingDuration = dayjs.duration(eventDay.diff(now));
+                const days = remainingDuration.days();
+                const hours = remainingDuration.hours();
+                const minutes = remainingDuration.minutes();
+                const seconds = remainingDuration.seconds();
+
+                overallCountdown.innerHTML = `Time until Andrea's special day: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+                overallProgress.style.width = `${waitProgress}%`;
+            } else if (now.isBefore(lastEventEnd)) {
+                // During the day of the events
+                const totalEventDuration = lastEventEnd.diff(firstEventStart);
+                const elapsedEventTime = now.diff(firstEventStart);
+                const eventProgress = Math.min(100, (elapsedEventTime / totalEventDuration) * 100);
+
+                overallCountdown.innerHTML = "Andrea's enchanting day is in progress!";
+                overallProgress.style.width = `${eventProgress}%`;
+            } else {
+                // After all events have ended
+                overallCountdown.innerHTML = "Andrea's enchanting day has concluded!";
+                overallProgress.style.width = '100%';
+            }
         }
 
         dayjs.extend(dayjs_plugin_duration);
@@ -386,42 +796,41 @@
 
         function updateTimers() {
             const now = dayjs();
-            events.forEach((event, index) => {
-                const eventTime = dayjs(event.time);
-                const distance = eventTime.diff(now);
+            const eventElements = document.querySelectorAll('.event');
 
-                const eventElement = document.getElementById(`event-${index}`).closest('.event');
-                const timerElement = document.getElementById(`timer-${index}`);
-                const checkbox = document.getElementById(`event-${index}`);
-                if (timerElement && checkbox) {
-                    if (distance < 0) {
+            eventElements.forEach((eventElement, index) => {
+                const event = events[index];
+                const eventStartTime = dayjs(event.startTime);
+                const eventEndTime = dayjs(event.endTime);
+                const distanceToStart = eventStartTime.diff(now);
+                const distanceToEnd = eventEndTime.diff(now);
+
+                const timerElement = eventElement.querySelector('.timer');
+                const toggleVenueBtn = eventElement.querySelector('.toggle-venue-info');
+
+                if (timerElement) {
+                    if (distanceToEnd < 0) {
                         timerElement.innerHTML = 'This magical moment has passed!';
-                        if (!checkbox.checked) {
-                            checkbox.checked = true;
-                            checkbox.disabled = true;
-                            toggleComplete(index);
+                        if (toggleVenueBtn && !toggleVenueBtn.disabled) {
+                            toggleVenueBtn.disabled = true;
+                            eventElement.classList.add('completed');
                         }
+                    } else if (distanceToStart < 0) {
+                        timerElement.innerHTML = `In progress! Ends in ${formatTimeRemaining(distanceToEnd)}`;
                     } else {
-                        timerElement.innerHTML = `Begins ${formatTimeRemaining(distance)}`;
+                        timerElement.innerHTML = `Begins in ${formatTimeRemaining(distanceToStart)}`;
                     }
                 }
             });
 
-            const mainTimerElement = document.getElementById('main-timer');
-            const firstEventTime = dayjs(events[0].time);
-            const overallDistance = firstEventTime.diff(now);
-            if (overallDistance < 0) {
-                mainTimerElement.innerHTML = 'Your enchanting day has begun, Andrea!';
-            } else {
-                mainTimerElement.innerHTML = 'Your autumn adventure begins ' + formatTimeRemaining(overallDistance);
-            }
+            updateOverallCountdown();
         }
 
         function checkPastEvents() {
-            const now = new Date().getTime();
+            const now = dayjs();
             events.forEach((event, index) => {
-                const eventTime = new Date(event.time).getTime();
-                if (now > eventTime) {
+                const eventEndTime = dayjs(event.endTime);
+                if (now.isAfter(eventEndTime)) {
                     const checkbox = document.getElementById(`event-${index}`);
                     if (checkbox && !checkbox.checked) {
                         checkbox.checked = true;
@@ -445,16 +854,31 @@
 
             // Set up the leaf management interval
             setInterval(manageLeafPool, 100);
+
             const container = document.getElementById('events-container');
             events.forEach((event, index) => {
                 container.appendChild(createEventElement(event, index));
             });
-            checkPastEvents(); // Check for past events on load
-            updateTimers();
+
+            // Add overall progress bar and countdown
+            const overallProgressContainer = document.createElement('div');
+            overallProgressContainer.className = 'overall-progress-container';
+            overallProgressContainer.innerHTML = `
+        <div id="overall-countdown"></div>
+        <div class="overall-progress-bar">
+            <div id="overall-progress"></div>
+        </div>
+    `;
+            document.querySelector('.container').insertBefore(overallProgressContainer, document.getElementById('events-container'));
+
+            // Initial update
+            updateOverallCountdown();
+
+            // Set up regular updates
             setInterval(() => {
-                checkPastEvents();
                 updateTimers();
-            }, 1000); // Update every minute
+                updateOverallCountdown();
+            }, 1000); // Update every second
         });
     </script>
 </body>
