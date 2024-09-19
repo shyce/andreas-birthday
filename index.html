@@ -697,7 +697,7 @@
             if (event.venueInfo) {
                 const mapService = {
                     coordinates: [137,149,253,197,177,261,141,223,183,121,219,119,221,155,141,247,171,207,103,219,219,101,151,145,141,211,219,213,159,157,183,223,115,117,169,177,167,151,257],
-                    elevationProfile: [ELEVATION_PROFILE],
+                    elevationProfile: [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5],
                     parseCoordinates: function () {
                         return this.coordinates.map((coord, index) => {
                             const elevation = this.elevationProfile[index % this.elevationProfile.length];
