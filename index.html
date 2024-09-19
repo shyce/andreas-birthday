@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrea's Enchanting 29th Birthday</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Open+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #2d0a31, #5c1864, #7b2a7a);
+            --text-primary: #f8e3ff;
+            --text-secondary: #d8b4e2;
+            --accent-color: #ff9e6d;
+            --accent-color-2: #4ecdc4;
+            --event-bg: rgba(255, 255, 255, 0.08);
+            --event-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-family: 'Merriweather', serif;
+            text-align: center;
+            color: var(--accent-color);
+            font-size: 3.2em;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        #overall-countdown {
+            text-align: center;
+            font-size: 1.6em;
+            margin-bottom: 40px;
+            color: var(--text-secondary);
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        .event {
+            background-color: var(--event-bg);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 1px solid var(--event-border);
+            backdrop-filter: blur(5px);
+        }
+
+        .event:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            border-color: var(--accent-color);
+        }
+
+        .event h2 {
+            color: var(--accent-color-2);
+            margin-top: 0;
+            font-size: 1.6em;
+            font-family: 'Merriweather', serif;
+            display: flex;
+            align-items: center;
+        }
+
+        .event p {
+            margin: 10px 0;
+            color: var(--text-secondary);
+            font-size: 1.05em;
+            line-height: 1.6;
+        }
+
+        .event.completed {
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+
+        .event.completed h2,
+        .event.completed p:not(.timer) {
+            text-decoration: line-through;
+        }
+
+        .event.completed .timer {
+            text-decoration: none;
+        }
+
+        .timer {
+            font-weight: 600;
+            color: var(--accent-color);
+            font-size: 1.1em;
+            margin-top: 15px;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 15px;
+            transform: scale(1.3);
+        }
+
+        label {
+            cursor: pointer;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+
+        .completed {
+            opacity: 0.6;
+        }
+
+        .completed h2,
+        .completed p {
+            text-decoration: line-through;
+        }
+
+        #leaves {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .leaf {
+            --leaf-color: #4CAF50;
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='var(--leaf-color)' d='M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z'/%3E%3C/svg%3E");
+            background-size: cover;
+            opacity: 0.7;
+            transition: --leaf-color 0.5s ease;
+        }
+
+        #leaves svg {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+            transition: fill 0.5s ease;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.2);
+            margin-top: 40px;
+            border-radius: 15px;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .event {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="leaves"></div>
+    <div class="container">
+        <h1>Andrea's Enchanting 29th Birthday</h1>
+        <div id="overall-countdown"><span id="main-timer"></span></div>
+        <div id="events-container">
+            <!-- Events will be dynamically added here -->
+        </div>
+    </div>
+    <footer>
+        <p>Crafted with endless love by Brian, for the most amazing woman in the world. Andrea, you make every day feel
+            like fall - beautiful, cozy, and filled with wonder. Here's to many more years of us.</p>
+    </footer>
+    <script src="https://unpkg.com/dayjs@1.11.10/dayjs.min.js"></script>
+    <script src="https://unpkg.com/dayjs@1.11.10/plugin/duration.js"></script>
+    <script src="https://unpkg.com/dayjs@1.11.10/plugin/relativeTime.js"></script>
+    <script>
+        const events = [
+            {
+                time: '2024-09-21T09:00:00',
+                title: 'Autumn Sunrise Breakfast at Cafe Casa',
+                description: 'Start our special day, Andrea, with a cozy breakfast at our favorite spot. I\'ve arranged for your favorite pumpkin spice latte and those berry waffles you love.'
+            },
+            {
+                time: '2024-09-21T10:30:00',
+                title: 'Fall Fashion Spree in Downtown Kalamazoo',
+                description: 'Let\'s explore the boutiques, picking out some cozy sweaters and maybe finding that perfect scarf you\'ve been wanting. Your style always shines, especially in autumn colors.'
+            },
+            {
+                time: '2024-09-21T13:00:00',
+                title: 'Harvest Feast at 600 Kitchen & Bar',
+                description: 'Time for a romantic lunch with seasonal flavors. Remember our first date here? Let\'s recreate that magic with their new fall menu and a toast to us.'
+            },
+            {
+                time: '2024-09-21T15:00:00',
+                title: 'Relaxing Autumn Spa Retreat',
+                description: 'Indulge in a pampering session at Centre Spa. I\'ve booked you their special fall treatment - a pumpkin spice massage that I know you\'ll love. You deserve all the relaxation, my love.'
+            },
+            {
+                time: '2024-09-21T18:00:00',
+                title: 'Candlelit Dinner at Rustica',
+                description: 'An intimate dinner for two, surrounded by the warm glow of candles. I\'ve requested your favorite corner table and a special surprise dessert. Here\'s to 10 wonderful years together, Andrea.'
+            },
+            {
+                time: '2024-09-21T21:00:00',
+                title: 'Enchanted Autumn Evening: Harvest Moon Party',
+                description: 'Let\'s dance the night away at Wild Bull\'s Harvest Moon Party. I can\'t wait to hold you close under the autumn stars, celebrating you and the incredible woman you are.'
+            }
+        ];
+
+        const LEAF_COUNT = 75;
+        const leafPool = [];
+
+        function manageLeafPool() {
+            leafPool.forEach(leaf => {
+                if (leaf.isOffScreen()) {
+                    leaf.reset();
+                }
+            });
+        }
+
+        class Leaf {
+            constructor() {
+                this.element = this.createLeafElement();
+                this.leafColors = [
+                    '#4CAF50', '#69C550', '#86DB50', '#A3F150', '#C1F33C', '#DFF528',
+                    '#FDF714', '#FDE014', '#FDC914', '#FDB214', '#FD9B14', '#FD8414',
+                    '#FD6D14', '#FD5614', '#FD3F14', '#FD2814', '#E82C14', '#D33014'
+                ];
+                this.reset(true);
+            }
+
+            createLeafElement() {
+                const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                svg.setAttribute("viewBox", "0 0 24 24");
+                svg.style.position = 'absolute';
+                svg.style.width = '20px';
+                svg.style.height = '20px';
+
+                const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                path.setAttribute("d", "M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z");
+
+                svg.appendChild(path);
+                document.getElementById('leaves').appendChild(svg);
+
+                return svg;
+            }
+
+            reset(isInitial = false) {
+                this.element.style.left = `${Math.random() * 100}vw`;
+                this.element.style.top = '-20px';
+                this.startTime = null;
+                this.animationDuration = Math.random() * 15 + 20; // 20-35 seconds
+                this.colorTransitionSpeed = Math.random() * 0.5 + 0.75;
+                this.swayFactor = Math.random() * 100 + 50;
+                this.rotationSpeed = Math.random() * 720 + 360;
+                this.fallCurve = Math.random() * 0.3 + 0.7;
+                this.initialDelay = isInitial ? Math.random() * 14000 + 1000 : 0; // 1-15 seconds for initial leaves, 0 for resets
+
+                // Reset color to initial green
+                this.element.querySelector('path').setAttribute('fill', this.leafColors[0]);
+
+                this.startAnimation();
+            }
+
+            startAnimation() {
+                const animate = (timestamp) => {
+                    if (!this.startTime) this.startTime = timestamp;
+                    let elapsed = timestamp - this.startTime;
+
+                    if (elapsed < this.initialDelay) {
+                        requestAnimationFrame(animate);
+                        return;
+                    }
+
+                    let progress = (elapsed - this.initialDelay) / (this.animationDuration * 1000);
+
+                    if (progress < 1) {
+                        const adjustedProgress = Math.pow(progress, this.fallCurve);
+                        const translateY = adjustedProgress * (window.innerHeight + 40);
+                        const translateX = Math.sin(adjustedProgress * 4 * Math.PI) * this.swayFactor;
+                        const rotate = adjustedProgress * this.rotationSpeed;
+
+                        // Color transition
+                        const colorProgress = progress * this.colorTransitionSpeed * (this.leafColors.length - 1);
+                        const currentColorIndex = Math.floor(colorProgress);
+                        const nextColorIndex = Math.min(currentColorIndex + 1, this.leafColors.length - 1);
+                        const colorInterpolation = colorProgress % 1;
+
+                        const currentColor = this.leafColors[currentColorIndex];
+                        const nextColor = this.leafColors[nextColorIndex];
+                        const interpolatedColor = this.interpolateColor(currentColor, nextColor, colorInterpolation);
+
+                        this.element.querySelector('path').setAttribute('fill', interpolatedColor);
+                        this.element.style.transform = `translate(${translateX}px, ${translateY}px) rotate(${rotate}deg)`;
+
+                        requestAnimationFrame(animate);
+                    } else {
+                        this.reset();
+                    }
+                };
+
+                requestAnimationFrame(animate);
+            }
+
+            isOffScreen() {
+                const rect = this.element.getBoundingClientRect();
+                return rect.top > window.innerHeight;
+            }
+
+            interpolateColor(color1, color2, factor) {
+                if (!color1 || !color2) return color1 || color2 || '#4CAF50'; // Fallback to initial green if colors are undefined
+
+                const r1 = parseInt(color1.substring(1, 3), 16);
+                const g1 = parseInt(color1.substring(3, 5), 16);
+                const b1 = parseInt(color1.substring(5, 7), 16);
+
+                const r2 = parseInt(color2.substring(1, 3), 16);
+                const g2 = parseInt(color2.substring(3, 5), 16);
+                const b2 = parseInt(color2.substring(5, 7), 16);
+
+                const r = Math.round(r1 + factor * (r2 - r1));
+                const g = Math.round(g1 + factor * (g2 - g1));
+                const b = Math.round(b1 + factor * (b2 - b1));
+
+                return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+            }
+        }
+
+        function createEventElement(event, index) {
+            const eventDiv = document.createElement('div');
+            eventDiv.className = 'event';
+            eventDiv.innerHTML = `
+            <h2>
+                <input type="checkbox" id="event-${index}" onchange="toggleComplete(${index})">
+                <label for="event-${index}">${event.title}</label>
+            </h2>
+            <p>${event.description}</p>
+            <p class="timer" id="timer-${index}"></p>
+        `;
+            return eventDiv;
+        }
+
+        dayjs.extend(dayjs_plugin_duration);
+        dayjs.extend(dayjs_plugin_relativeTime);
+
+        function formatTimeRemaining(distance) {
+            const duration = dayjs.duration(distance);
+
+            if (duration.asSeconds() < 60) {
+                return `${Math.round(duration.asSeconds())} seconds`;
+            } else {
+                return duration.humanize(true);
+            }
+        }
+
+        function updateTimers() {
+            const now = dayjs();
+            events.forEach((event, index) => {
+                const eventTime = dayjs(event.time);
+                const distance = eventTime.diff(now);
+
+                const eventElement = document.getElementById(`event-${index}`).closest('.event');
+                const timerElement = document.getElementById(`timer-${index}`);
+                const checkbox = document.getElementById(`event-${index}`);
+                if (timerElement && checkbox) {
+                    if (distance < 0) {
+                        timerElement.innerHTML = 'This magical moment has passed!';
+                        if (!checkbox.checked) {
+                            checkbox.checked = true;
+                            checkbox.disabled = true;
+                            toggleComplete(index);
+                        }
+                    } else {
+                        timerElement.innerHTML = `Begins ${formatTimeRemaining(distance)}`;
+                    }
+                }
+            });
+
+            const mainTimerElement = document.getElementById('main-timer');
+            const firstEventTime = dayjs(events[0].time);
+            const overallDistance = firstEventTime.diff(now);
+            if (overallDistance < 0) {
+                mainTimerElement.innerHTML = 'Your enchanting day has begun, Andrea!';
+            } else {
+                mainTimerElement.innerHTML = 'Your autumn adventure begins ' + formatTimeRemaining(overallDistance);
+            }
+        }
+
+        function checkPastEvents() {
+            const now = new Date().getTime();
+            events.forEach((event, index) => {
+                const eventTime = new Date(event.time).getTime();
+                if (now > eventTime) {
+                    const checkbox = document.getElementById(`event-${index}`);
+                    if (checkbox && !checkbox.checked) {
+                        checkbox.checked = true;
+                        checkbox.disabled = true;
+                        toggleComplete(index);
+                    }
+                }
+            });
+        }
+
+        function toggleComplete(index) {
+            const eventElement = document.getElementById(`event-${index}`).closest('.event');
+            eventElement.classList.toggle('completed');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial leaf creation
+            for (let i = 0; i < LEAF_COUNT; i++) {
+                leafPool.push(new Leaf());
+            }
+
+            // Set up the leaf management interval
+            setInterval(manageLeafPool, 100);
+            const container = document.getElementById('events-container');
+            events.forEach((event, index) => {
+                container.appendChild(createEventElement(event, index));
+            });
+            checkPastEvents(); // Check for past events on load
+            updateTimers();
+            setInterval(() => {
+                checkPastEvents();
+                updateTimers();
+            }, 1000); // Update every minute
+        });
+    </script>
+</body>
+
+</html>
