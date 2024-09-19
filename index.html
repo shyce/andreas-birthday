@@ -477,7 +477,6 @@
                     name: `Caffè Casa`,
                     address: `128 S Kalamazoo Mall, Kalamazoo, MI 49007`,
                     phone: `(269) 385-1026`,
-                    mapsLink: `https://goo.gl/maps/X5XZQ9Z9Z9Z9Z9Z9A`
                 }
             },
             {
@@ -489,7 +488,6 @@
                 venueInfo: {
                     name: `Kalamazoo Mall`,
                     address: `South Kalamazoo Mall, Kalamazoo, MI 49007`,
-                    mapsLink: `https://goo.gl/maps/Y6Y6Q9Z9Z9Z9Z9Z9B`
                 }
             },
             {
@@ -497,12 +495,10 @@
                 endTime: '2024-09-21T15:00:00',
                 title: `Lunch at 600 Kitchen & Bar`,
                 description: `We'll settle in for a romantic lunch at 600 Kitchen & Bar, known for its creative seasonal menu and inviting atmosphere. We can reminisce about our journey together over delicious dishes and toast to the moments that brought us here.`,
-                giftTime: `I've arranged for a special birthday dessert to be served at the end of our meal.`,
                 venueInfo: {
                     name: `600 Kitchen & Bar`,
                     address: `600 E Michigan Ave, Kalamazoo, MI 49007`,
                     phone: `(269) 443-2401`,
-                    mapsLink: `https://goo.gl/maps/Z7Z7Q9Z9Z9Z9Z9Z9C`
                 }
             },
             {
@@ -510,12 +506,11 @@
                 endTime: '2024-09-21T17:30:00',
                 title: `Relaxing Spa Retreat at Centre Spa`,
                 description: `You deserve some pampering, so we'll head to Centre Spa for a well-deserved retreat. I've arranged for a soothing deep tissue massage, allowing you to unwind and let go of any stress.`,
-                giftTime: `In addition to the massage, I've booked a surprise spa treatment for you to enjoy.`,
+                giftTime: `In addition to the massage, I'll be driving you around and getting you anything you need!`,
                 venueInfo: {
                     name: `Centre Spa`,
                     address: `1429 W Main St, Kalamazoo, MI 49006`,
                     phone: `(269) 342-4441`,
-                    mapsLink: `https://goo.gl/maps/A8A8Q9Z9Z9Z9Z9Z9D`
                 }
             },
             {
@@ -528,20 +523,28 @@
                     name: `Rustica`,
                     address: `236 S Kalamazoo Mall, Kalamazoo, MI 49007`,
                     phone: `(269) 492-0247`,
-                    mapsLink: `https://goo.gl/maps/B9B9Q9Z9Z9Z9Z9Z9E`
                 }
             },
             {
                 startTime: '2024-09-21T20:30:00',
-                endTime: '2024-09-21T23:59:59',
+                endTime: '2024-09-22T02:00:00', // Extended to 2 AM the next day
                 title: `Harvest Moon Dance at Wild Bull`,
                 description: `Finally, we'll dance the night away at Wild Bull, where our story began. The energy will be electric as we celebrate at the Harvest Moon Party, and just when we think the night can't get any better, we'll enjoy the late-night pizza buffet—no waiting in line!`,
-                freeTime: `Take breaks between dances to enjoy the outdoor patio and gaze at the harvest moon.`,
+                freeTime: `Take breaks between dances to enjoy the outdoor patio and re-live memories of when we met.`,
                 venueInfo: {
                     name: `Wild Bull Saloon & Steakpit`,
                     address: `139 S Edwards St, Kalamazoo, MI 49007`,
                     phone: `(269) 978-8451`,
-                    mapsLink: `https://goo.gl/maps/C0C0Q9Z9Z9Z9Z9Z9F`
+                }
+            },
+            {
+                startTime: '2024-09-22T02:00:00',
+                endTime: '2024-09-22T02:30:00',
+                title: `Safe Ride Home`,
+                description: `After an amazing night of celebration, it's time for a safe journey home. I'll arrange for a reliable ride to ensure we end the night responsibly.`,
+                venueInfo: {
+                    name: `Uber Pickup Point`,
+                    address: `139 S Edwards St, Kalamazoo, MI 49007`,
                 }
             }
         ];
@@ -806,11 +809,11 @@
                 const elapsedEventTime = now.diff(firstEventStart);
                 const eventProgress = Math.min(100, (elapsedEventTime / totalEventDuration) * 100);
 
-                overallCountdown.innerHTML = "Andrea's enchanting day is in progress!";
+                overallCountdown.innerHTML = "Andrea, I love you with all my heart and hope this day is everything.";
                 overallProgress.style.width = `${eventProgress}%`;
             } else {
                 // After all events have ended
-                overallCountdown.innerHTML = "Andrea's enchanting day has concluded!";
+                overallCountdown.innerHTML = "Good night, beautiful.";
                 overallProgress.style.width = '100%';
             }
         }
@@ -855,6 +858,7 @@
 
                 const timerElement = eventElement.querySelector('.timer');
                 const toggleVenueBtn = eventElement.querySelector('.toggle-venue-info');
+                const progressBar = eventElement.querySelector('.progress-bar');
 
                 if (timerElement) {
                     if (distanceToEnd < 0) {
@@ -863,10 +867,16 @@
                             toggleVenueBtn.disabled = true;
                             eventElement.classList.add('completed');
                         }
+                        progressBar.style.width = '100%';
                     } else if (distanceToStart < 0) {
                         timerElement.innerHTML = `In progress! Ends in ${formatTimeRemaining(distanceToEnd)}`;
+                        const totalDuration = eventEndTime.diff(eventStartTime);
+                        const elapsed = now.diff(eventStartTime);
+                        const percentage = (elapsed / totalDuration) * 100;
+                        progressBar.style.width = `${percentage}%`;
                     } else {
                         timerElement.innerHTML = `Begins in ${formatTimeRemaining(distanceToStart)}`;
+                        progressBar.style.width = '0%';
                     }
                 }
             });
@@ -912,14 +922,15 @@
             const overallProgressContainer = document.createElement('div');
             overallProgressContainer.className = 'overall-progress-container';
             overallProgressContainer.innerHTML = `
-        <div id="overall-countdown"></div>
-        <div class="overall-progress-bar">
-            <div id="overall-progress"></div>
-        </div>
-    `;
+                <div id="overall-countdown"></div>
+                <div class="overall-progress-bar">
+                    <div id="overall-progress"></div>
+                </div>
+            `;
             document.querySelector('.container').insertBefore(overallProgressContainer, document.getElementById('events-container'));
 
             // Initial update
+            updateTimers();
             updateOverallCountdown();
 
             // Set up regular updates
