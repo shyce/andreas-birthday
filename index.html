@@ -4,19 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Andrea's Enchanting 29th Birthday</title>
+    <title>Andrea's Enchanting 39th Birthday</title>
     <link
-        href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Open+Sans:wght@400;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap"
         rel="stylesheet">
     <style>
         :root {
-            --bg-gradient: linear-gradient(135deg, #2d0a31, #5c1864, #7b2a7a);
+            --bg-gradient: radial-gradient(circle, #1a0933, #3c096c);
             --text-primary: #f8e3ff;
             --text-secondary: #d8b4e2;
             --accent-color: #ff9e6d;
             --accent-color-2: #4ecdc4;
-            --event-bg: rgba(255, 255, 255, 0.08);
-            --event-border: rgba(255, 255, 255, 0.1);
+            --event-bg: rgba(255, 255, 255, 0.1);
+            --event-border: rgba(255, 255, 255, 0.2);
+            --completed-opacity: 0.5;
         }
 
         body {
@@ -39,25 +40,26 @@
         }
 
         h1 {
-            font-family: 'Merriweather', serif;
+            font-family: 'Playfair Display', serif;
             text-align: center;
             color: var(--accent-color);
-            font-size: 3.2em;
+            font-size: 3.5em;
             margin-bottom: 30px;
             letter-spacing: 1px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
         }
 
         #overall-countdown {
             text-align: center;
-            font-size: 1.6em;
+            font-size: 2em;
             margin-bottom: 40px;
             color: var(--text-secondary);
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.2);
             padding: 20px;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            transition: opacity 0.5s ease;
         }
 
         .event {
@@ -65,7 +67,7 @@
             border-radius: 15px;
             padding: 25px;
             margin-bottom: 30px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
             transition: all 0.3s ease;
             border: 1px solid var(--event-border);
             backdrop-filter: blur(5px);
@@ -73,14 +75,15 @@
 
         .event:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
             border-color: var(--accent-color);
+            filter: brightness(1.1);
         }
 
         .event h2 {
             color: var(--accent-color-2);
             margin-top: 0;
-            font-size: 1.6em;
+            font-size: 1.8em;
             font-family: 'Merriweather', serif;
             display: flex;
             align-items: center;
@@ -89,12 +92,12 @@
         .event p {
             margin: 10px 0;
             color: var(--text-secondary);
-            font-size: 1.05em;
+            font-size: 1.1em;
             line-height: 1.6;
         }
 
         .event.completed {
-            opacity: 0.6;
+            opacity: var(--completed-opacity);
             transition: opacity 0.3s ease;
         }
 
@@ -110,7 +113,7 @@
         .timer {
             font-weight: 600;
             color: var(--accent-color);
-            font-size: 1.1em;
+            font-size: 1.2em;
             margin-top: 15px;
         }
 
@@ -127,15 +130,6 @@
             flex: 1;
         }
 
-        .completed {
-            opacity: 0.6;
-        }
-
-        .completed h2,
-        .completed p {
-            text-decoration: line-through;
-        }
-
         #leaves {
             position: fixed;
             top: 0;
@@ -147,22 +141,11 @@
         }
 
         .leaf {
-            --leaf-color: #4CAF50;
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='var(--leaf-color)' d='M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z'/%3E%3C/svg%3E");
-            background-size: cover;
-            opacity: 0.7;
-            transition: --leaf-color 0.5s ease;
-        }
-
-        #leaves svg {
             position: absolute;
             width: 20px;
             height: 20px;
             opacity: 0.7;
-            transition: fill 0.5s ease;
+            transition: opacity 0.5s ease;
         }
 
         footer {
@@ -171,7 +154,7 @@
             background-color: rgba(0, 0, 0, 0.2);
             margin-top: 40px;
             border-radius: 15px;
-            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
             position: relative;
             z-index: 1;
         }
@@ -191,15 +174,17 @@
 <body>
     <div id="leaves"></div>
     <div class="container">
-        <h1>Andrea's Enchanting 29th Birthday</h1>
+        <h1>Andrea's Enchanting 39th Birthday</h1>
         <div id="overall-countdown"><span id="main-timer"></span></div>
         <div id="events-container">
             <!-- Events will be dynamically added here -->
         </div>
     </div>
     <footer>
-        <p>Crafted with endless love by Brian, for the most amazing woman in the world. Andrea, you make every day feel
-            like fall - beautiful, cozy, and filled with wonder. Here's to many more years of us.</p>
+        <p>Andrea, as we celebrate another year together, I can't help but reflect on our amazing journey since that
+            night at Wild Bull. From our early adventures to raising our incredible son Gabriel, you’ve been the light
+            of my life. Our love continues to grow stronger, filling our days with laughter and joy. Here’s to you, the
+            heart of our family, and all the beautiful moments still ahead.</p>
     </footer>
     <script src="https://unpkg.com/dayjs@1.11.10/dayjs.min.js"></script>
     <script src="https://unpkg.com/dayjs@1.11.10/plugin/duration.js"></script>
@@ -208,35 +193,36 @@
         const events = [
             {
                 time: '2024-09-21T09:00:00',
-                title: 'Autumn Sunrise Breakfast at Cafe Casa',
-                description: 'Start our special day, Andrea, with a cozy breakfast at our favorite spot. I\'ve arranged for your favorite pumpkin spice latte and those berry waffles you love.'
+                title: 'Autumn Sunrise Breakfast at Café Casa',
+                description: 'We’ll kick off your special day with a warm and cozy breakfast at Café Casa, a lovely spot that feels like a home away from home. Picture us nestled in a corner, enjoying the smell of freshly brewed coffee and your favorite pastries while the autumn sun starts to peek through the leaves outside. It’ll be the perfect way to savor the morning and set the tone for the day ahead.'
             },
             {
-                time: '2024-09-21T10:30:00',
-                title: 'Fall Fashion Spree in Downtown Kalamazoo',
-                description: 'Let\'s explore the boutiques, picking out some cozy sweaters and maybe finding that perfect scarf you\'ve been wanting. Your style always shines, especially in autumn colors.'
+                time: '2024-09-21T11:00:00',
+                title: 'Fall Fashion Exploration in Downtown Kalamazoo',
+                description: 'After breakfast, we’ll stroll through the charming boutiques in downtown Kalamazoo. As we wander hand in hand, we’ll take our time trying on cozy sweaters and browsing for that perfect scarf to complement the fall colors. It’ll be a delightful way to enjoy the crisp air and capture the essence of the season together, all while sharing laughter and inspiration.'
             },
             {
-                time: '2024-09-21T13:00:00',
-                title: 'Harvest Feast at 600 Kitchen & Bar',
-                description: 'Time for a romantic lunch with seasonal flavors. Remember our first date here? Let\'s recreate that magic with their new fall menu and a toast to us.'
+                time: '2024-09-21T13:30:00',
+                title: 'Lunch at 600 Kitchen & Bar',
+                description: 'Next, we’ll settle in for a romantic lunch at 600 Kitchen & Bar, a place known for its creative seasonal menu and inviting atmosphere. We can reminisce about our journey together over delicious dishes and toast to the moments that brought us here. I want to create a space where we can connect and share stories, savoring each bite just as much as we savor each other’s company.'
             },
             {
-                time: '2024-09-21T15:00:00',
-                title: 'Relaxing Autumn Spa Retreat',
-                description: 'Indulge in a pampering session at Centre Spa. I\'ve booked you their special fall treatment - a pumpkin spice massage that I know you\'ll love. You deserve all the relaxation, my love.'
+                time: '2024-09-21T15:30:00',
+                title: 'Relaxing Spa Retreat at Centre Spa',
+                description: 'You deserve a little pampering, so we’ll head to Centre Spa for a well-deserved retreat. I’ve arranged for a soothing deep tissue massage, allowing you to unwind and let go of any stress. It’ll be a peaceful escape where you can relax and recharge, and I can’t wait to see you blissfully rejuvenated afterward, ready to enjoy the rest of our day.'
             },
             {
                 time: '2024-09-21T18:00:00',
                 title: 'Candlelit Dinner at Rustica',
-                description: 'An intimate dinner for two, surrounded by the warm glow of candles. I\'ve requested your favorite corner table and a special surprise dessert. Here\'s to 10 wonderful years together, Andrea.'
+                description: 'As the sun begins to set, we’ll head to Rustica for an intimate dinner by candlelight. This cozy restaurant is perfect for us to share a meal filled with rich flavors and heartwarming conversation. I’ll have a special dessert planned to surprise you, making this moment even sweeter. It’s a chance for us to reflect on our years together while looking forward to all that’s yet to come.'
             },
             {
-                time: '2024-09-21T21:00:00',
-                title: 'Enchanted Autumn Evening: Harvest Moon Party',
-                description: 'Let\'s dance the night away at Wild Bull\'s Harvest Moon Party. I can\'t wait to hold you close under the autumn stars, celebrating you and the incredible woman you are.'
+                time: '2024-09-21T20:30:00',
+                title: 'Harvest Moon Dance at Wild Bull',
+                description: 'Finally, we’ll dance the night away at Wild Bull, where our story began. The energy will be electric as we celebrate at the Harvest Moon Party, and just when we think the night can’t get any better, we’ll enjoy the late-night pizza buffet—no waiting in line! It’ll be a perfect way to reminisce about our first moments while making new memories together under the autumn stars.'
             }
         ];
+
 
         const LEAF_COUNT = 75;
         const leafPool = [];
@@ -376,12 +362,26 @@
 
         function formatTimeRemaining(distance) {
             const duration = dayjs.duration(distance);
+            const days = Math.floor(duration.asDays());
+            const hours = Math.floor(duration.hours());
+            const minutes = Math.floor(duration.minutes());
+            const seconds = Math.floor(duration.seconds());
 
-            if (duration.asSeconds() < 60) {
-                return `${Math.round(duration.asSeconds())} seconds`;
-            } else {
-                return duration.humanize(true);
+            let timeString = [];
+            if (days > 0) {
+                timeString.push(`${days} day${days > 1 ? 's' : ''}`);
             }
+            if (hours > 0) {
+                timeString.push(`${hours} hour${hours > 1 ? 's' : ''}`);
+            }
+            if (minutes > 0) {
+                timeString.push(`${minutes} minute${minutes > 1 ? 's' : ''}`);
+            }
+            if (seconds > 0) {
+                timeString.push(`${seconds} second${seconds > 1 ? 's' : ''}`);
+            }
+
+            return timeString.join(', ');
         }
 
         function updateTimers() {
