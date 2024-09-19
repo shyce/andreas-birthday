@@ -8,6 +8,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;700&display=swap"
         rel="stylesheet">
+    <link rel="icon" type="image/png" href="favicon.png">
     <style>
         :root {
             --bg-gradient: radial-gradient(circle at center, #1a0933, #3c096c);
@@ -39,15 +40,50 @@
             z-index: 1;
         }
 
+
+        .title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .title-image {
+            width: 80px;
+            height: 80px;
+            margin-right: 20px;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
         h1 {
             font-family: 'Playfair Display', serif;
-            text-align: center;
             color: var(--accent-color);
-            font-size: 3.5em;
-            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-align: left;
+            margin: 0;
             letter-spacing: 1px;
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
 
 
         .event {
@@ -394,6 +430,16 @@
             #overall-countdown {
                 font-size: 1em;
             }
+
+            .title-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .title-image {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
         }
     </style>
 </head>
@@ -401,7 +447,10 @@
 <body>
     <div id="leaves"></div>
     <div class="container">
-        <h1>Andrea's Enchanted 39th Birthday</h1>
+        <div class="title-container">
+            <img src="favicon.png" alt="Cupcake" class="title-image">
+            <h1>Andrea's Enchanted 39th Birthday</h1>
+        </div>
         <div id="overall-countdown"><span id="main-timer"></span></div>
         <div id="events-container">
             <!-- Events will be dynamically added here -->
